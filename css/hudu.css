@@ -1,0 +1,250 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.h-list{
+    position: relative;
+    float: left;
+    width: 200px;
+    background: #101353;
+    height: calc(100vh - 119px);
+    padding-top: 119px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+}
+.h-lists{
+    border-top: 1px solid #fff;
+}
+.h-lists p{
+    color: #fff;
+    font-family: "MicrosoftYahei";
+    font-size: 24px;
+    line-height: calc(16.66666667vh - 20px);
+    text-align: center;
+}
+.h-content{
+    position: relative;
+    float: left;
+    width: calc(100% - 200px);
+}
+.h-top{
+    height: 120px;
+    width:100%;
+    background-color: #fff;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
+}
+.h-search{
+    margin-right: 18px;
+    width: 433px;
+    height: 60px;
+    background-color: #f2f2f2;
+    border-radius: 15px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+.h-search img{
+    width: 32px;
+    height: 32px;
+}
+.h-search input{
+    width: 360px;
+    height: 32px;
+    border:none;
+    margin-left: 14px;
+    background-color: #f2f2f2; 
+    font-size: 16px;
+    font-family:  "MicrosoftYahei";
+    color: rgb(16, 19, 83);
+    padding-left: 10px;
+}
+.h-top .h-btn{
+    margin-right: 48px;
+    width: 80px;
+    height: 60px;
+    background-color: #101353;
+    border-radius: 15px;
+    color: #fff;
+    font-family: "MicrosoftYahei";
+    font-size: 24px;
+    line-height: 60px;
+    text-align: center;
+}
+
+/* hudu  开始 */
+.hudu{
+    /* background: url(../images/hudu/bg_2.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%; */
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 120px);
+}
+.h-result ul li{
+    list-style:none;  
+}
+.h-result{
+    padding: 30px 50px;
+    height: calc(100vh - 264px);
+    display: flex;
+    flex-flow: column nowrap;
+    /* justify-content: space-between; */
+}
+.h-result ul{
+    display: flex;
+    flex-flow:  row nowrap;
+    align-items: center;
+    height: calc(33.3vh - 88px);
+}
+.h-result ul li{
+    width: calc(14.2857vw - 40px);
+    text-align: center;
+}
+.h-data{
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+}
+.h-data-pic{
+    width: 105px;
+    height: 140px;
+    margin: 0 auto;
+    border-radius: 18px;      
+}
+.h-data-pic img{
+    width: 105px;
+    height: 140px;
+    border-radius: 18px;      
+}
+.h-data-pic-none{
+    width: 105px;
+    height: 140px;
+    background-color: #101353;   
+    opacity: 1;
+    border-radius: 18px;  
+}
+.h-data-type{
+    position: relative;
+    margin-top: -140px;
+    height: 140px;
+    width: calc(14.2857vw - 40px);
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+.h-data-type-hover{
+    width: 105px;
+    height: 140px;
+    background-color: #111;
+    opacity: 0.5;
+    margin-top: -140px;
+    border-radius: 18px;   
+}
+.h-data-type-img{
+    width: 105px;
+    height: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #fff;   
+    border-radius: 18px;       
+}
+.h-video{
+    width: 42px;
+    height: 41px;
+    z-index: 2;
+}
+.h-pdf{
+    width: 49px;
+    height: 49px;
+    z-index: 2;    
+}
+.h-pic{
+    width: 46px;
+    height: 41px;
+    z-index: 2;    
+}
+.h-music{
+    width: 42px;
+    height: 49px;
+    z-index: 2;    
+}
+.h-p{
+    font-size: 20px;
+    color: #fff;
+    font-family: "MicrosoftYahei";
+    width: 140px;
+    position: relative;
+    margin: 0 auto;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    margin-top: 10px;
+}
+/* 底下翻页栏 */
+.h-page{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+}
+.h-paging{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    margin-right: 14px;
+}
+.h-blocks{
+    border: 1px solid #ddd;
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+    font-family:  "MicrosoftYahei";
+    line-height: 32px;
+    text-align: center; 
+    color: #999; 
+    background-color: #fff;
+    cursor: pointer;  
+}
+.h-blocks:hover{
+    border: 1px solid #101353;  
+    background-color: #d9dbff;     
+}
+.h-select-block{
+    background-color: #101353;
+    border: 1px solid #101353;    
+}
+.h-jump{
+    margin-right: 9px;
+    width: 40px;
+    height: 32px;
+    background-color: #fff;
+}
+.h-jump input{
+    width: 40px;
+    height: 32px;
+    border:none;
+    font-size: 12px;
+    line-height: 32px;
+    text-align: center;
+    font-family:  "MicrosoftYahei";
+    color: #999;
+}
+.h-num{
+    font-size: 14px;
+    font-family:  "MicrosoftYahei";
+    color: #fff;
+    line-height: 32px;
+    margin-right: 13px;
+    text-align: center;
+}
+/* hudu   结束 */

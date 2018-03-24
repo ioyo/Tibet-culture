@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>详情页</title>
+    <link rel="stylesheet" href="css/detail.css"></link>
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script> 
+    <!-- <script type="text/javascript" src="js/mock-data.js"></script>     -->
+    <script type="text/javascript" src="js/detail.js"></script>
+</head>
+<body>
+    <header class="header">
+        <img src="images/FOLDER.png" alt="folder">
+        <span>西藏文化/走进西藏/走进西藏/走进西藏</span>
+    </header>
+    <div class="wrap">
+        <aside>
+            <nav id="buttons">
+                <ul>
+                    <li id="video" index="0" class="focus">视频</li>
+                    <li id="audio" index="1">音频</li>
+                    <li id="image" index="2">图片</li>
+                </ul>
+            </nav>
+            <div class="list-wrap">
+                <div id="list" style="left:-0px;">
+                    <section id="movielist">
+                    </section>
+                    <section id="musiclist">
+                    </section>
+                    <section id="piclist">
+                    </section>
+                </div>
+            </div>
+        </aside>
+        <article>
+            <div class="source-title">
+                <span></span>
+                <a href="fileUrl"></a>
+            </div>
+            <div class="source-wrap">
+                <!-- 视频 -->
+                <div class="video-wrap" index="0">
+                    <video width="1400" height="787" id="videoControls" poster="" controls>
+                        <source src="" type="video/mp4">
+                    </video>
+                    <span class="pic-btn btn-prev" id="video-prev"></span>                    
+                    <span class="pic-btn btn-next" id="video-next"></span>
+                    
+                    <!-- <div class="control-bar">
+                        <span id="video-prev" class="btn-prev"></span>
+                        <span id="video-play" class="btn-play"></span>
+                        <span id="video-next" class="btn-next"></span>
+                    </div> -->
+                </div>
+                
+                <!-- 音频 -->
+                <div class="audio-wrap hidden" index="1">
+                    <img class="audio-cover" src="images/audiocover.png" alt="audiocover" width="1180" height="787">
+                    <div class="control-bar">
+                        <div class="component-progress">
+                            <div class="progress" draggable="true"></div>
+                        </div>
+                        <span id="audio-prev" class="btn-prev"></span>                        
+                        <span id="audio-play" class="btn-play"></span>
+                        <span id="audio-next" class="btn-next"></span>
+                        <span id="audio-progress-time" class="progress-time">00:00/00:00</span>
+                        <span id="laba" class="laba"></span>
+                        <input type="range" id="volumeChange" value="30">
+                    </div>
+                    <!-- <audio id="audioControls">
+                        <source src="" type="audio/mp3">
+                    </audio> -->
+                </div>
+
+                <!-- 图片 -->
+                <div class="pic-wrap hidden" index="2">
+                    <span class="pic-btn btn-prev" id="pic-prev"></span>
+                    <img id="picImg" src="images/pic.png" width="1180" height="787">                    
+                    <embed id="picEmbed" src="images/pic.png" width="1180" height="787" type="application/pdf">
+                    <span class="pic-btn btn-next" id="pic-next"></span>                    
+                </div>
+
+            </div>
+            <div class="source-desc">
+            </div>
+        </article>
+    </div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>藏文化展示</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/hudu.css" />
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/hudu.js"></script>
+</head>
+
+<body>
+    <div class="main">
+        <div class="left-nav">
+            <!-- <div class="nav-item"></div> -->
+        </div>
+        <div class="right-content">
+            <!-- <div class="search-con">
+                <div class="search-right">
+                    <input type="text" placeholder="请输入关键字">
+                    <button>搜索</button>
+                </div>
+            </div> -->
+            <div class="h-top">
+                <div class="h-search">
+                    <img src="images/hudu/search.png" alt="">
+                    <input id="hSearch" type="text">
+                </div>
+                <div class="h-btn" id="hBtn">搜索</div>
+            </div>
+
+            <div id="treeCon">
+                <!-- <div class="leaf-con"></div> -->
+                <!-- <div class="leaf"></div> -->
+            </div>
+            <canvas id="canvas"></canvas>
+
+            <!-- 显示搜索页面内容 -->
+            <!-- hudu  开始 -->
+            <div class="hudu" id="hudu">
+                <div class="h-result" id="hResult">
+                </div>
+                <div class="h-page" id="hPage">
+                    <div class="h-num">共有
+                        <span id="hpgNum">0</span>条，每页显示：21条</div>
+                    <div class="h-paging" id="hpaging">
+                        <div class="h-blocks" id="hBlockll">&lt;&lt;</div>
+                        <div class="h-blocks" id="hBlockl">&lt;</div>
+                        <div class="h-blocks h-select-block" id="hBlock1">1</div>
+                        <div class="h-blocks" id="hBlockr">&gt;</div>
+                        <div class="h-blocks" id="hBlockrr">&gt;&gt;</div>
+                    </div>
+                    <div class="h-jump">
+                        <input id="hNum" type="text">
+                    </div>
+                    <div class="h-blocks h-go " id="hGo">GO</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
