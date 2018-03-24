@@ -1,3 +1,7 @@
+const validate = true;
+function validator () {
+  console.log(this);
+}
 $(document).ready(function() {
   var tree = [];
   var uniqId = 0; //用于添加、编辑时提交表单的时候传id参数
@@ -139,8 +143,8 @@ $(document).ready(function() {
     var addNavDiv = `<div class="box add-nav-box">
     <form class="form-con" enctype="multipart/form-data" method="post" name="fileForm">
         <div class="title">
-            <label>节点名称：</label>
-            <input type="text" name="name"/>
+            <label>目录名称：</label>
+            <input type="text" name="name" oninput="validator()"/>
         </div>
     </form>
     <div class="cha"></div>
@@ -503,7 +507,7 @@ $(document).ready(function() {
     <form class="form-con" enctype="multipart/form-data" method="post" name="fileForm">
         <div class="title">
             <label class="required">目录名称：</label>
-            <input type="text" name="name" value="${name === "" ? "" : name}">
+            <input type="text" name="name" value="${name === "" ? "" : name}" oninput="validator()">
         </div>
         <div class="photo">
             <label class="required">目录封面：</label>
@@ -638,7 +642,7 @@ $(document).ready(function() {
     <form class="form-con file-con" enctype="multipart/form-data" method="post" name="fileForm">
         <div class="title required">
             <label class="required">资源名称：</label>
-            <input type="text" name="name">
+            <input type="text" name="name" oninput="validator()">
         </div>
         <div class="file">
             <label class="required">资源文件：</label>
@@ -1081,4 +1085,3 @@ $(document).ready(function() {
     cxt.stroke();
   }
 });
-
