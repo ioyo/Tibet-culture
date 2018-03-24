@@ -1,7 +1,14 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.default-font{
+  font-size: 24px;
+}
+.small-font{
+  font-size: 18px;
 }
 
 input,
@@ -24,9 +31,16 @@ textarea {
 }
 
 .left-nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  flex-flow: column wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column wrap;
+          flex-flow: column wrap;
   float: left;
   padding: 120px 0;
   width: 200px;
@@ -35,9 +49,15 @@ textarea {
 }
 
 .nav-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   width: 100%;
   height: 146px;
   border-top: 1px solid rgba(255, 255, 255, 0.5);
@@ -90,7 +110,8 @@ textarea {
   position: absolute;
   right: 48px;
   top: 50%;
-  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
 }
 
 .search-con input::-webkit-input-placeholder {
@@ -138,9 +159,14 @@ textarea {
 }
 
 #treeCon {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   position: relative;
-  flex-flow: column nowrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
   padding-top: 33px;
   width: 100%;
   height: calc(100% - 120px);
@@ -150,8 +176,13 @@ textarea {
 
 .leaf-con {
   position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-flow: column nowrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
   margin-left: 110px;
   width: 200px;
 }
@@ -165,11 +196,16 @@ textarea {
   z-index: 5;
   width: 200px;
   height: 80px;
-  font-size: 24px;
+  /* font-size: 24px; */
   line-height: 80px;
   text-align: center;
   color: #fff;
   background-color: #101353;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  cursor: pointer;
 }
 
 .leaf-con-2 {
@@ -192,7 +228,6 @@ textarea {
   z-index: 7;
   width: 200px;
   height: 80px;
-  font-size: 24px;
   line-height: 80px;
   text-align: center;
   color: #fff;
@@ -227,8 +262,13 @@ textarea {
 }
 
 .popup .popTop {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-flow: column wrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column wrap;
+          flex-flow: column wrap;
   padding: 0 20px;
   width: 100%;
   height: 200px;
@@ -246,8 +286,13 @@ textarea {
 }
 
 .popTop .popInfo {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-flow: row wrap;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
   margin-left: 10px;
   width: 185px;
   height: 200px;
@@ -296,8 +341,13 @@ textarea {
 }
 
 .popup .popBottom {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-flow: column wrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column wrap;
+          flex-flow: column wrap;
   position: absolute;
   bottom: 0;
   border-bottom-left-radius: 20px;
@@ -308,10 +358,19 @@ textarea {
 }
 
 .popBottom .opera {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  flex-flow: column wrap;
-  justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column wrap;
+          flex-flow: column wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   border-right: 1px solid #fff;
   padding: 0 25px;
   width: 33.33%;
@@ -335,11 +394,16 @@ textarea {
 }
 
 .add .item-con {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   position: absolute;
   top: 0;
   right: -90px;
-  flex-flow: row wrap;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
   border: 1px solid #fff;
   border-radius: 20px;
   width: 90px;
@@ -356,9 +420,15 @@ textarea {
 }
 
 .item-con .add-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.7);
   width: 90px;
   height: 50px;
@@ -379,7 +449,8 @@ textarea {
   width: 700px;
   height: 442px;
   background: #fff;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
   z-index: 13;
 }
 
@@ -416,9 +487,13 @@ textarea {
 }
 
 .form-con .photo {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   position: relative;
-  align-items: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
   margin-bottom: 30px;
 }
 
@@ -444,9 +519,13 @@ textarea {
 }
 
 .form-con .message {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   position: relative;
-  align-items: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
 }
 
 .form-con .message textarea {
@@ -472,7 +551,8 @@ textarea {
   bottom: 31px;
   left: 50%;
   width: 355px;
-  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
 }
 
 .box .confirm button {
@@ -534,8 +614,12 @@ textarea {
 }
 
 .file-con .file {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .file-con .file .upLoad-file {
@@ -589,7 +673,8 @@ textarea {
   height: 200px;
   width: 700px;
   background: #fff;
-  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
 }
 
 .add-nav-box .form-con {
@@ -605,16 +690,19 @@ textarea {
   line-height: 12px;
   font-weight: bold;
   content: "*";
-  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
 }
 
 .message .required::before {
   top: 8px;
-  transform: translateY(0);
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
 }
 
 .photo .required::before {
   top: 8px;
-  transform: translateY(0);
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
 }
 

@@ -1,6 +1,9 @@
-const validate = true;
-function validator () {
-  console.log(this);
+var validate = true;
+function validator (elem) {
+  if (elem.value.length > 10) {
+    validate = false;
+  }
+  
 }
 $(document).ready(function() {
   var tree = [];
@@ -144,7 +147,7 @@ $(document).ready(function() {
     <form class="form-con" enctype="multipart/form-data" method="post" name="fileForm">
         <div class="title">
             <label>目录名称：</label>
-            <input type="text" name="name" oninput="validator()"/>
+            <input type="text" name="name" oninput="validator(this)"/>
         </div>
     </form>
     <div class="cha"></div>
@@ -507,7 +510,7 @@ $(document).ready(function() {
     <form class="form-con" enctype="multipart/form-data" method="post" name="fileForm">
         <div class="title">
             <label class="required">目录名称：</label>
-            <input type="text" name="name" value="${name === "" ? "" : name}" oninput="validator()">
+            <input type="text" name="name" value="${name === "" ? "" : name}" oninput="validator(this)">
         </div>
         <div class="photo">
             <label class="required">目录封面：</label>
@@ -561,6 +564,9 @@ $(document).ready(function() {
 
     // 点击确定，提交表单
     $(".sure").click(function() {
+      if (!validate) {
+        return false;
+      }
       var formData = new FormData(document.forms.namedItem("fileForm"));
       var id = uniqId;
       formData.append("id", uniqId);
@@ -642,7 +648,7 @@ $(document).ready(function() {
     <form class="form-con file-con" enctype="multipart/form-data" method="post" name="fileForm">
         <div class="title required">
             <label class="required">资源名称：</label>
-            <input type="text" name="name" oninput="validator()">
+            <input type="text" name="name" oninput="validator(this)">
         </div>
         <div class="file">
             <label class="required">资源文件：</label>
@@ -961,7 +967,7 @@ $(document).ready(function() {
         }
         var newLevel = levelList.join(",");
         var leafConH = 80 * childList.length + 50 * (childList.length - 1);
-        var node1 = `<div class="leaf leaf-1" id="${
+        var node1 = `<div class="leaf leaf-1 ${childList[a].name.length < 6?'default-font':'small-font'}" id="${
           childList[a].id
         }" data-level="${newLevel + "," + childList[a].id}" data-pic="${
           childList[a].pic
