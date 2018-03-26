@@ -1,11 +1,26 @@
 var validate = true;
-function validator (elem) {
-  if (elem.value.length > 10) {
+
+function validator(elem) {
+  /* if (elem.value.length > 10) {
     validate = false;
   }
-  
+  console.log(elem); */
+  var validatorNum = parseInt(elem.dataset.validator, 10);
+  switch (validatorNum) {
+    case 1:
+      document.querySelector('.validator1').innerHTML = `${elem.value.length}/12`;
+      break;
+    case 2:
+      document.querySelector('.validator2').innerHTML = `${elem.value.length}/12`;
+      break;
+    case 3:
+      document.querySelector('.validator3').innerHTML = `${elem.value.length}/12`;
+      break;
+    default:
+      break;
+  }
 }
-$(document).ready(function() {
+$(document).ready(function () {
   var tree = [];
   var uniqId = 0; //用于添加、编辑时提交表单的时候传id参数
   var opened = false; //控制点击添加时，小框是否显示
@@ -13,7 +28,7 @@ $(document).ready(function() {
   var service = "http://tibetan.test.codebook.com.cn/api/";
 
   $(".hudu").css("display", "none");
-  $("#hBtn").click(function(e) {
+  $("#hBtn").click(function (e) {
     $(".hudu").css("display", "block");
     $("#treeCon").css("display", "none");
     $("#canvas").css("display", "none");
@@ -24,7 +39,7 @@ $(document).ready(function() {
     $(".h-top").css("right", "0");
     $(".h-top").css("width", "calc(100% - 200px)");
     $(".hudu").css("width", "calc(100% - 200px)");
-    $(".nav-item").each(function() {
+    $(".nav-item").each(function () {
       $(this).removeClass("nav-item-active");
     });
   });
@@ -33,14 +48,14 @@ $(document).ready(function() {
     url: `${service}Tibetan/TibetanCulture/GetTree`,
     type: "GET",
     async: false, //异步为false
-    success: function(res) {
+    success: function (res) {
       console.log(res.data);
       tree = res.data;
     }
   });
 
   // 窗口发生改变时刷新页面
-  $(window).resize(function() {
+  $(window).resize(function () {
     var rightConW = $(window).width() - 200;
     $(".right-content").width(rightConW);
     window.location.reload();
@@ -76,7 +91,7 @@ $(document).ready(function() {
   var cxt = canvas.getContext("2d");
 
   // 点击左边菜单
-  $(".left-nav").on("click", ".nav-item", function(e) {
+  $(".left-nav").on("click", ".nav-item", function (e) {
     // 点击左边菜单时，右边隐藏搜索内容
     $(".hudu").css("display", "none");
     $("#treeCon").css("display", "block");
@@ -93,7 +108,7 @@ $(document).ready(function() {
     var cxtH = $("#canvas").height();
     var cxtW = $("#canvas").width();
     cxt.clearRect(0, 0, cxtW, cxtH);
-    $(".nav-item").each(function() {
+    $(".nav-item").each(function () {
       $(this).removeClass("nav-item-active");
     });
     $(this).addClass("nav-item-active");
@@ -113,7 +128,7 @@ $(document).ready(function() {
       url: `${service}Tibetan/TibetanCulture/GetTree?id=${curId}`,
       type: "GET",
       async: false, //异步为false
-      success: function(res) {
+      success: function (res) {
         if (
           res.data[0].children.length !== 0 &&
           res.data[0].children !== "null"
@@ -136,7 +151,7 @@ $(document).ready(function() {
   });
 
   // 点击左边菜单的添加
-  $(".left-nav").on("click", ".addNav", function(e) {
+  $(".left-nav").on("click", ".addNav", function (e) {
     $(this).removeClass("nav-item-active");
     if ($(this).hasClass("addNav-active")) {
       $(this).removeClass("addNav-active");
@@ -147,7 +162,10 @@ $(document).ready(function() {
     <form class="form-con" enctype="multipart/form-data" method="post" name="fileForm">
         <div class="title">
             <label>目录名称：</label>
-            <input type="text" name="name" oninput="validator(this)"/>
+            <div>
+              <input type="text" name="name" value="${name === "" ? "" : name}" data-validator="1" oninput="validator(this)"/>
+              <span class="validator1" style="color: #999;">0/12</span>
+            </div>
         </div>
     </form>
     <div class="cha"></div>
@@ -160,55 +178,59 @@ $(document).ready(function() {
     $(".main").append(addNavDiv);
     $(".main").append(mask);
     // 点右上角× 和取消
-    $(".cha").click(function() {
+    $(".cha").click(function () {
       $(".addNav").removeClass("addNav-active");
       hideEdit();
     });
 
-    $(".concel").click(function() {
+    $(".concel").click(function () {
       $(".addNav").removeClass("addNav-active");
       hideEdit();
     });
 
     // 点击确定，提交表单
-    $(".sure").click(function() {
+    $(".sure").click(function () {
       var formData = new FormData(document.forms.namedItem("fileForm"));
       var id = uniqId;
       var name = formData.getAll("name");
       formData.append("id", uniqId);
       formData.append("name", name);
-      $.ajax({
-        url: `${service}Tibetan/TibetanCulture/AddFirstNode?name=${name}&id=${id}`,
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false, // 当有文件要上传时，此项是必须的，否则后台无法识别文件流的起始位置
-        success: function(res) {
-          console.log(res);
-          // 重新请求树结构，渲染子节点
-          $.ajax({
-            url: `${service}Tibetan/TibetanCulture/GetTree`,
-            type: "GET",
-            async: false, //异步为false
-            success: function(res) {
-              console.log(res.data);
-              var addNew = res.data[res.data.length - 1];
-              var newDiv = `<div class="nav-item" id="${
-                addNew.id
-              }" data-level="${addNew.id + ","}
-            " data-haschild="${haschild}">${addNew.name}</div>`;
-              $(".addNav").before(newDiv);
-              $(".addNav").removeClass("addNav-active");
-            }
-          });
-        }
-      });
+      console.log(formData.getAll('name').length,formData.getAll('info').length);
+      if (formData.getAll('name').length > 0 && formData.getAll('info').length) {
+
+        $.ajax({
+          url: `${service}Tibetan/TibetanCulture/AddFirstNode?name=${name}&id=${id}`,
+          type: "POST",
+          data: formData,
+          processData: false,
+          contentType: false, // 当有文件要上传时，此项是必须的，否则后台无法识别文件流的起始位置
+          success: function (res) {
+            console.log(res);
+            // 重新请求树结构，渲染子节点
+            $.ajax({
+              url: `${service}Tibetan/TibetanCulture/GetTree`,
+              type: "GET",
+              async: false, //异步为false
+              success: function (res) {
+                console.log(res.data);
+                var addNew = res.data[res.data.length - 1];
+                var newDiv = `<div class="nav-item" id="${
+                  addNew.id
+                }" data-level="${addNew.id + ","}
+              " data-haschild="${haschild}">${addNew.name}</div>`;
+                $(".addNav").before(newDiv);
+                $(".addNav").removeClass("addNav-active");
+              }
+            });
+          }
+        });
+      }
       hideEdit();
     });
   });
 
   // 点击一级节点
-  $("#treeCon").on("click", ".leaf-1", function(e) {
+  $("#treeCon").on("click", ".leaf-1", function (e) {
     showPop($(this));
     $(".leaf-con-2").empty();
     $(".leaf-con-3").empty();
@@ -219,7 +241,7 @@ $(document).ready(function() {
   });
 
   // 点击二级节点
-  $("#treeCon").on("click", ".leaf-2", function(e) {
+  $("#treeCon").on("click", ".leaf-2", function (e) {
     showPop($(this));
     $(".leaf-con-3").empty();
     $(".leaf-con-4").empty();
@@ -229,7 +251,7 @@ $(document).ready(function() {
   });
 
   // 点击三级节点
-  $("#treeCon").on("click", ".leaf-3", function(e) {
+  $("#treeCon").on("click", ".leaf-3", function (e) {
     showPop($(this));
     $(".leaf-con-4").empty();
     var cxtH = $("#canvas").height();
@@ -238,7 +260,7 @@ $(document).ready(function() {
   });
 
   // 点击四级节点
-  $("#treeCon").on("click", ".leaf-4", function(e) {
+  $("#treeCon").on("click", ".leaf-4", function (e) {
     showPop($(this));
     $("leaf-con-5").empty();
     var cxtH = $("#canvas").height();
@@ -271,14 +293,14 @@ $(document).ready(function() {
         url: `${service}Tibetan/TibetanCulture/DeleteNode?id=${fileNode[0].id}`,
         type: "POST",
         async: false, //异步为false
-        success: function(res) {
+        success: function (res) {
           console.log(res);
           // 删除后重新请求tree
           $.ajax({
             url: `${service}Tibetan/TibetanCulture/GetTree`,
             type: "GET",
             async: false, //异步为false
-            success: function(res) {
+            success: function (res) {
               console.log(res.data);
               tree = res.data;
               // 重新从父节点渲染子节点(删除之后)
@@ -381,7 +403,7 @@ $(document).ready(function() {
     }
 
     // 添加子级、父级、同级节点
-    $(".nextNode").click(function(e) {
+    $(".nextNode").click(function (e) {
       var node = $(this)
         .parent()
         .parent()
@@ -391,7 +413,7 @@ $(document).ready(function() {
       e.stopPropagation();
       showEdit(node, 0);
     });
-    $(".preNode").click(function(e) {
+    $(".preNode").click(function (e) {
       var node = $(this)
         .parent()
         .parent()
@@ -401,7 +423,7 @@ $(document).ready(function() {
       e.stopPropagation();
       showEdit(node, 1);
     });
-    $(".brother").click(function(e) {
+    $(".brother").click(function (e) {
       var node = $(this)
         .parent()
         .parent()
@@ -413,7 +435,7 @@ $(document).ready(function() {
     });
 
     // 添加资源
-    $(".content").click(function(e) {
+    $(".content").click(function (e) {
       var node = $(this)
         .parent()
         .parent()
@@ -436,7 +458,7 @@ $(document).ready(function() {
       self
         .parent()
         .children()
-        .each(function(e) {
+        .each(function (e) {
           $(".leafOn .popup").detach();
           $(this).removeClass("leafOn");
         });
@@ -465,19 +487,19 @@ $(document).ready(function() {
     $(".leafOn").append(popup);
 
     // 点击简介
-    $(".popTop").click(function(e) {
+    $(".popTop").click(function (e) {
       e.stopPropagation();
       toNext($(this));
     });
 
     // 点击删除
-    $(".delete").click(function(e) {
+    $(".delete").click(function (e) {
       e.stopPropagation();
       del($(this));
     });
 
     //点击编辑
-    $(".edit").click(function(e) {
+    $(".edit").click(function (e) {
       var node = $(this)
         .parent()
         .parent()
@@ -487,7 +509,7 @@ $(document).ready(function() {
     });
 
     // 点击添加
-    $(".add").click(function(e) {
+    $(".add").click(function (e) {
       e.stopPropagation();
       add($(this), level);
     });
@@ -510,7 +532,10 @@ $(document).ready(function() {
     <form class="form-con" enctype="multipart/form-data" method="post" name="fileForm">
         <div class="title">
             <label class="required">目录名称：</label>
-            <input type="text" name="name" value="${name === "" ? "" : name}" oninput="validator(this)">
+            <div>
+              <input type="text" name="name" value="${name === "" ? "" : name}" data-validator="2" oninput="validator(this)"/>
+              <span class="validator2" style="color: #999;">0/12</span>
+            </div>
         </div>
         <div class="photo">
             <label class="required">目录封面：</label>
@@ -535,13 +560,13 @@ $(document).ready(function() {
     $(".main").append(mask);
 
     // 上传图片时产生缩略图
-    $(".upLoadPic").change(function() {
+    $(".upLoadPic").change(function () {
       if (typeof FileReader != "undefined") {
         var phoPreview = $(".upload-img");
-        $($(this)[0].files).each(function() {
+        $($(this)[0].files).each(function () {
           var file = $(this);
           var reader = new FileReader();
-          reader.onload = function(e) {
+          reader.onload = function (e) {
             phoPreview.css({
               background: `url("${e.target.result}")`,
               "background-repeat": "no-repeat",
@@ -554,85 +579,88 @@ $(document).ready(function() {
     });
 
     // 点右上角× 和取消
-    $(".cha").click(function() {
+    $(".cha").click(function () {
       hideEdit();
     });
 
-    $(".concel").click(function() {
+    $(".concel").click(function () {
       hideEdit();
     });
 
     // 点击确定，提交表单
-    $(".sure").click(function() {
+    $(".sure").click(function () {
       if (!validate) {
         return false;
       }
+      var file = document.querySelector('.upLoadPic').files[0] || false;
       var formData = new FormData(document.forms.namedItem("fileForm"));
       var id = uniqId;
       formData.append("id", uniqId);
       formData.append("sign", sign);
-      $.ajax({
-        url: `${service}Tibetan/TibetanCulture/AddOrEditTreeNode`,
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false, // 当有文件要上传时，此项是必须的，否则后台无法识别文件流的起始位置
-        success: function(res) {
-          console.log(res);
-          // 重新请求树结构，渲染子节点
-          $.ajax({
-            url: `${service}Tibetan/TibetanCulture/GetTree`,
-            type: "GET",
-            async: false, //异步为false
-            success: function(res) {
-              console.log(res.data);
-              tree = res.data;
-            }
-          });
-
-          // 重新从父节点渲染子节点
-          var nowLevel = node[0].dataset.level; //当前节点的level
-          var nowLevelList = String(nowLevel).split(",");
-          var parId = nowLevelList[nowLevelList.length - 2]; //当前节点的父节点的id
-          var list = [];
-          if (nowLevelList.length === 2) {
-            list = $(".nav-item");
-            for (let i = 0; i < list.length; i++) {
-              if (list[i].id === parId) {
-                var nowSelf = list[i]; //从dom中根据id找到父节点
-                $(nowSelf).trigger("click"); //伪主动触发点击事件
-                $(nowSelf)
-                  .children()
-                  .remove();
-                if (sign === 2) {
-                  alert("修改成功");
-                } else {
-                  alert("添加成功");
-                }
-                break;
+      if (file && formData.getAll('name').length > 0 && formData.getAll('info').length) {
+        $.ajax({
+          url: `${service}Tibetan/TibetanCulture/AddOrEditTreeNode`,
+          type: "POST",
+          data: formData,
+          processData: false,
+          contentType: false, // 当有文件要上传时，此项是必须的，否则后台无法识别文件流的起始位置
+          success: function (res) {
+            console.log(res);
+            // 重新请求树结构，渲染子节点
+            $.ajax({
+              url: `${service}Tibetan/TibetanCulture/GetTree`,
+              type: "GET",
+              async: false, //异步为false
+              success: function (res) {
+                console.log(res.data);
+                tree = res.data;
               }
-            }
-          } else {
-            list = $(".leaf");
-            for (let i = 0; i < list.length; i++) {
-              if (list[i].id === parId) {
-                var nowSelf = list[i]; //从dom中根据id找到父节点,点击父节点下的popup的简介
-                $(nowSelf).trigger("click"); //伪主动触发点击事件
-                $(nowSelf)
-                  .children(".popup")
-                  .children(".popTop")
-                  .trigger("click");
-                if (sign === 2) {
-                  alert("修改成功");
-                } else {
-                  alert("添加成功");
+            });
+  
+            // 重新从父节点渲染子节点
+            var nowLevel = node[0].dataset.level; //当前节点的level
+            var nowLevelList = String(nowLevel).split(",");
+            var parId = nowLevelList[nowLevelList.length - 2]; //当前节点的父节点的id
+            var list = [];
+            if (nowLevelList.length === 2) {
+              list = $(".nav-item");
+              for (let i = 0; i < list.length; i++) {
+                if (list[i].id === parId) {
+                  var nowSelf = list[i]; //从dom中根据id找到父节点
+                  $(nowSelf).trigger("click"); //伪主动触发点击事件
+                  $(nowSelf)
+                    .children()
+                    .remove();
+                  if (sign === 2) {
+                    alert("修改成功");
+                  } else {
+                    alert("添加成功");
+                  }
+                  break;
                 }
-                break;
+              }
+            } else {
+              list = $(".leaf");
+              for (let i = 0; i < list.length; i++) {
+                if (list[i].id === parId) {
+                  var nowSelf = list[i]; //从dom中根据id找到父节点,点击父节点下的popup的简介
+                  $(nowSelf).trigger("click"); //伪主动触发点击事件
+                  $(nowSelf)
+                    .children(".popup")
+                    .children(".popTop")
+                    .trigger("click");
+                  if (sign === 2) {
+                    alert("修改成功");
+                  } else {
+                    alert("添加成功");
+                  }
+                  break;
+                }
               }
             }
           }
-        }
-      });
+        });
+      }
       hideEdit();
     });
   }
@@ -648,7 +676,10 @@ $(document).ready(function() {
     <form class="form-con file-con" enctype="multipart/form-data" method="post" name="fileForm">
         <div class="title required">
             <label class="required">资源名称：</label>
-            <input type="text" name="name" oninput="validator(this)">
+            <div>
+              <input type="text" name="name" value="${name === "" ? "" : name}" data-validator="3"  oninput="validator(this)"/>
+              <span class="validator3" style="color: #999;">0/12</span>
+            </div>
         </div>
         <div class="file">
             <label class="required">资源文件：</label>
@@ -679,13 +710,13 @@ $(document).ready(function() {
 
 
     // 上传图片时产生缩略图
-    $(".upLoadPic").change(function() {
+    $(".upLoadPic").change(function () {
       if (typeof FileReader != "undefined") {
         var phoPreview = $(".upload-img");
-        $($(this)[0].files).each(function() {
+        $($(this)[0].files).each(function () {
           var file = $(this);
           var reader = new FileReader();
-          reader.onload = function(e) {
+          reader.onload = function (e) {
             phoPreview.css({
               background: `url("${e.target.result}")`,
               "background-repeat": "no-repeat",
@@ -698,7 +729,7 @@ $(document).ready(function() {
     });
 
     //点击上传文件时，改变选择文件为重新选择，显示文件名
-    $(".file-input").change(function(e) {
+    $(".file-input").change(function (e) {
       var file = document.getElementsByClassName("file-input")[0].files[0];
       console.log(file);
       var fileName = file.name;
@@ -707,19 +738,19 @@ $(document).ready(function() {
     });
 
     // 点右上角× 和取消
-    $(".cha").click(function() {
+    $(".cha").click(function () {
       hideEdit();
     });
 
-    $(".concel").click(function() {
+    $(".concel").click(function () {
       hideEdit();
     });
 
     // 点击确定，提交表单
-    $(".sure").click(function() {
+    $(".sure").click(function () {
       var formData = new FormData(document.forms.namedItem("fileForm"));
       var id = uniqId;
-      var file = document.getElementsByClassName("file-input")[0].files[0];
+      var file = document.getElementsByClassName("file-input")[0].files[0] || false;
       console.log(file, "文件");
       var typeList = String(file.type).split("/");
       var typeTest = typeList[0]; //判断文件的类型image,audio,video,application
@@ -739,54 +770,57 @@ $(document).ready(function() {
       }
       formData.append("id", uniqId);
       formData.append("type", type);
-      $.ajax({
-        url: `${service}Tibetan/TibetanCulture/UploadInstanceFile`,
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false, // 当有文件要上传时，此项是必须的，否则后台无法识别文件流的起始位置
-        success: function(res) {
-          console.log(res);
-          // 重新请求树结构，渲染子节点
-          $.ajax({
-            url: `${service}Tibetan/TibetanCulture/GetTree`,
-            type: "GET",
-            async: false, //异步为false
-            success: function(res) {
-              console.log(res.data);
-              tree = res.data;
-              // 重新从父节点渲染子节点(删除之后)
-              var nowLevel = node[0].dataset.level; //当前节点的level
-              var nowLevelList = String(nowLevel).split(",");
-              var parId;
+      if (file && formData.getAll('name').length > 0 && formData.getAll('info').length) {
 
-              //新增资源，从自身开始渲染
-              parId = nowLevelList[nowLevelList.length - 2];
-              if (nowLevelList.length === 2) {
-                list = $(".nav-item");
-              } else {
-                list = $(".leaf");
-              }
-              for (let i = 0; i < list.length; i++) {
-                if (list[i].id === parId) {
-                  var nowSelf = list[i]; //从dom中根据id找到父节点
-                  $(nowSelf).trigger("click"); //
-                  $(nowSelf)
-                    .children(".popup")
-                    .children(".popTop")
-                    .trigger("click");
-                  $(nowSelf)
-                    .children()
-                    .remove();
-                  console.log("渲染了");
-                  break;
+        $.ajax({
+          url: `${service}Tibetan/TibetanCulture/UploadInstanceFile`,
+          type: "POST",
+          data: formData,
+          processData: false,
+          contentType: false, // 当有文件要上传时，此项是必须的，否则后台无法识别文件流的起始位置
+          success: function (res) {
+            console.log(res);
+            // 重新请求树结构，渲染子节点
+            $.ajax({
+              url: `${service}Tibetan/TibetanCulture/GetTree`,
+              type: "GET",
+              async: false, //异步为false
+              success: function (res) {
+                console.log(res.data);
+                tree = res.data;
+                // 重新从父节点渲染子节点(删除之后)
+                var nowLevel = node[0].dataset.level; //当前节点的level
+                var nowLevelList = String(nowLevel).split(",");
+                var parId;
+  
+                //新增资源，从自身开始渲染
+                parId = nowLevelList[nowLevelList.length - 2];
+                if (nowLevelList.length === 2) {
+                  list = $(".nav-item");
+                } else {
+                  list = $(".leaf");
                 }
+                for (let i = 0; i < list.length; i++) {
+                  if (list[i].id === parId) {
+                    var nowSelf = list[i]; //从dom中根据id找到父节点
+                    $(nowSelf).trigger("click"); //
+                    $(nowSelf)
+                      .children(".popup")
+                      .children(".popTop")
+                      .trigger("click");
+                    $(nowSelf)
+                      .children()
+                      .remove();
+                    console.log("渲染了");
+                    break;
+                  }
+                }
+                alert("成功添加资源");
               }
-              alert("成功添加资源");
-            }
-          });
-        }
-      });
+            });
+          }
+        });
+      }
       hideEdit();
     });
   }
