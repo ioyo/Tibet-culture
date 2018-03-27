@@ -707,3 +707,29 @@ textarea {
           transform: translateY(0);
 }
 
+.valid-con {
+  display: inline-block;
+  position: relative;
+}
+
+.validator1 {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.validator2 {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.validator3 {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+

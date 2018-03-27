@@ -627,15 +627,20 @@
               var hid = e.currentTarget.id.slice(5);
               var instance_id = "";
               var path = "";
+              $.ajaxSetup({  
+                async : false  
+              });  
               $.get(
                 "http://tibetan.test.codebook.com.cn/api/TibetanFile/InstanceFile/GetInstanceFileNodes?id=" +
                   hid,
                 function(d) {
                   instance_id = d.data.instance_id;
                   path = d.data.path;
+                  // console.log(path)
                 },
                 "json"
               );
+              // window.open("./detail.html?id=" + instance_id + "&path=" + path+"id="+hid);
               window.open("./detail.html?id=" + instance_id + "&path=" + path);
             });
           }
